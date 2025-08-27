@@ -1,4 +1,6 @@
 const express = require("express");
+const dotenv = require("dotenv");
+envFile.config();
 
 const { userRouter } = require("./routes/user");
 const { courseRouter } = require("./routes/course");
@@ -19,4 +21,14 @@ app.get("/",function(req,res){
     res.sendFile( __dirname + "/public/index.html")
 })
 
-app.listen(3000);
+ async function main() {
+    try{
+         await mongoose.connect(process.env.MONGO_URL);
+         app.listen(process.env.PORT);
+    } catch (e){
+        console.error("Error on " + e);
+    }
+   
+ }
+
+ main();

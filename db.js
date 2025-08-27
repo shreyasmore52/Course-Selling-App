@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
-mongoose.connect("mongodb+srv://Admin:HnOYcQYlUdcG5M8f@cluster0.ljyj4pf.mongodb.net/Course-App");
+
+const envFile = require("dotenv");
+envFile.config();
+mongoose.connect(process.env.MONGO_URL);
 
 const userSchema = new Schema({
     email : { type: String , unique: true},
