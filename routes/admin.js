@@ -2,6 +2,8 @@ const { Router } = require("express");
 
 const adminRouter = Router();
 
+const { adminModel } = require("../db");
+
 adminRouter.post("/sign-up", function(req,res){
     res.json("you are in Admin endPoint")
 })

@@ -2,6 +2,7 @@ const { Router } = require("express");
 
 const courseRouter = Router();
 
+const { courseModel } = require("../db");
 
 courseRouter.post("/purchase",function(req,res){
     //we expect here user is pay money alredy
