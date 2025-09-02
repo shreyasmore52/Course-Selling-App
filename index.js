@@ -1,6 +1,7 @@
 const express = require("express");
-const dotenv = require("dotenv");
+const envFile = require("dotenv");
 envFile.config();
+
 
 const { userRouter } = require("./routes/user");
 const { courseRouter } = require("./routes/course");
@@ -28,7 +29,9 @@ app.get("/",function(req,res){
     } catch (e){
         console.error("Error on " + e);
     }
-   
- }
 
+ }
+ 
  main();
+
+ // step 8 added scripts and complete admin router end to end 
