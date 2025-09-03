@@ -2,9 +2,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Router } = require("express");
 const adminRouter = Router();
-const { adminModel } = require("../db");
-const { z } = require("zod");
-const { adminAuthMiddelware , JWT_SECRET_ADMIN} = require("../auth");
+const { adminModel, courseModel } = require("../db");
+const { z, success } = require("zod");
+const { adminAuthMiddelware , JWT_SECRET_ADMIN} = require("../middleware/auth");
 
 const signupValidation = z.object({
     email: z.email("Invalid email format").max(30),
@@ -93,12 +93,32 @@ adminRouter.post("/log-in", async function(req,res){
  
 })
 
-adminRouter.post("/create/course", adminAuthMiddelware,function(req,res){
-    res.json("you are in Create course endPoint")
+adminRouter.post("/course", adminAuthMiddelware , async function(req,res){
+    try{
+        const adminID = req.adminID;
+        const { title , description , price , imageUrl } = req.body;
+        const course = await courseModel.create({
+            title: title,
+            description: description,
+            price: price,
+            imageUrl: imageUrl,
+            creatorId: adminID
+        })
+        return res.status(201).json({
+            success: true,
+            message: "Course Created Successfully",
+            courseId: course._id
+        })
+    }catch(e){
+        return res.status(500).json({
+            message: "error on ->" + e
+        });
+    }
+
 })
 
-adminRouter.put("/edite/course", adminAuthMiddelware,function(req,res){
-    res.json("you are in Edite course endPoint")
+adminRouter.put("/course", adminAuthMiddelware,function(req,res){
+    res.json("you are in Edite course endPoint update")
 })
 
 adminRouter.get("/all/course", adminAuthMiddelware,function(req,res){

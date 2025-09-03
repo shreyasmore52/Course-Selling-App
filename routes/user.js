@@ -4,7 +4,7 @@ const { Router } = require("express");
 const userRouter = Router();
 const { userModel } = require("../db");
 const { z } = require("zod");
-const { userAuthMiddelware, JWT_SECRET_USER } = require("../auth");
+const { userAuthMiddelware, JWT_SECRET_USER } = require("../middleware/auth");
 
 const signupValidation = z.object({
     email: z.email("Invalid email format").max(30),
@@ -96,6 +96,9 @@ userRouter.post("/log-in", async function(req,res){
 })
 
 userRouter.get("/purchases",userAuthMiddelware,function(req,res){
+   
+   const userId = req.userID; 
+   
     res.json({
             message: "This is courses user has "
         })
