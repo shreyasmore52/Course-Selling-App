@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const { Router } = require("express");
 const adminRouter = Router();
 const { adminModel, courseModel } = require("../db");
-const { z, success } = require("zod");
+const { z } = require("zod");
 const { adminAuthMiddelware , JWT_SECRET_ADMIN} = require("../middleware/auth");
 
 const signupValidation = z.object({
@@ -147,7 +147,7 @@ adminRouter.put("/course", adminAuthMiddelware, async function(req,res){
 adminRouter.get("/course", adminAuthMiddelware, async function(req,res){
     try{
         const adminID = req.adminID;
-        const { title , description , price , imageUrl , courseId } = req.body;
+        
         const course = await courseModel.find({
             creatorId : adminID // this is the condition we put here
         })
