@@ -11,12 +11,12 @@ courseRouter.post("/purchase", userAuthMiddelware , async function(req,res){
     //we expect here user is pay money alredy
     try{
 
-        const userId = req.userId;
+        const userID = req.userID;
         const courseId = req.body.courseId;
 
         const newPurchase = await purchaseModel.create({
-            userId: userId,
-            courseId: courseId
+            courseId: courseId,
+            userID: userID,
         })
 
         return res.status(202).json({

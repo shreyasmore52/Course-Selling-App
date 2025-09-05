@@ -10,4 +10,10 @@
  - Define the schema for user , admin , coruse ,purchase
  - complete the routes for user login, signup, purchase a course , see course 
 (Extra points - Use express routing to better structure your routes)
+
 - Create the frontend  for it
+
+- Good to haves
+- Add a rate limiting middelware
+- frontend in eJs (low pri)
+- frontend in React
