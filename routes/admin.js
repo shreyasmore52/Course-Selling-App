@@ -117,12 +117,50 @@ adminRouter.post("/course", adminAuthMiddelware , async function(req,res){
 
 })
 
-adminRouter.put("/course", adminAuthMiddelware,function(req,res){
-    res.json("you are in Edite course endPoint update")
+adminRouter.put("/course", adminAuthMiddelware, async function(req,res){
+  try{
+        const adminID = req.adminID;
+        const { title , description , price , imageUrl , courseId } = req.body;
+        const course = await courseModel.updateOne({
+            _id : courseId,
+            creatorId : adminID // this is the condition we put here
+        },{
+            title: title,
+            description: description,
+            price: price,
+            imageUrl: imageUrl,
+            creatorId: adminID
+            
+        })
+        return res.status(202).json({
+            success: true,
+            message: "Course updated successfully",
+            courseId: course._id
+        })
+      }catch(e){
+        return res.status(500).json({
+            message: "error on ->" + e
+        });
+    }
 })
 
-adminRouter.get("/all/course", adminAuthMiddelware,function(req,res){
-    res.json("you are in Create course endPoint")
+adminRouter.get("/course", adminAuthMiddelware, async function(req,res){
+    try{
+        const adminID = req.adminID;
+        const { title , description , price , imageUrl , courseId } = req.body;
+        const course = await courseModel.find({
+            creatorId : adminID // this is the condition we put here
+        })
+        return res.status(202).json({
+            success: true,
+            message: "All Courses ",
+            courseId: course
+        })
+      }catch(e){
+        return res.status(500).json({
+            message: "error on ->" + e
+        });
+    }
 })
 
 
